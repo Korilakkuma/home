@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <title>Boot Linux on MacBook Air 2020 &middot; rilakkuma3xjapan</title>
+    <meta name="generator" content="Hugo 0.105.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Korilakkuma">
+    
+      <meta name="description" content="MacBook Air 2020 で Ubuntu をデュアルブートする">
+    
+    
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="alternate" type="application/rss+xml" title="rilakkuma3xjapan" />
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="feed" type="application/rss+xml" title="rilakkuma3xjapan" />
+    
+    <link rel="canonical" href="https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/"/>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/style.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/monokai.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Boot Linux on MacBook Air 2020" />
+<meta property="og:description" content="MacBook Air 2020 で Ubuntu をデュアルブートする" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-04-09T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Boot Linux on MacBook Air 2020">
+<meta itemprop="description" content="MacBook Air 2020 で Ubuntu をデュアルブートする"><meta itemprop="datePublished" content="2022-04-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-04-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2785">
+<meta itemprop="keywords" content="Linux,Ubuntu,macOS," />
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Boot Linux on MacBook Air 2020"/>
+<meta name="twitter:description" content="MacBook Air 2020 で Ubuntu をデュアルブートする"/>
+
+    
+
+    
+    <style>
+        #main {
+            display: 100% !important;
+        }
+
+        @media screen and (min-width: 1200px) {
+            #main {
+                width: calc(200px + 52.307692307692314%);
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            #sidebar {
+                 width: calc(50px + 21.53846153846154%);
+            }
+        }
+    </style>
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="https://rilakkuma3xjapan.website" id="logo">
+          
+          <i class="logo" style="background-image: url('https://rilakkuma3xjapan.website/icon.png')"></i>
+          
+          <span class="site-title">rilakkuma3xjapan</span>
+      </a>
+      <nav id="main-nav">
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a>
+          
+          
+          
+          
+          
+          
+
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a>
+          
+
+          
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a>
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a>
+          
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://rilakkuma3xjapan.website/profile.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a></td>
+          
+          
+          
+          
+          
+          
+
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a></td>
+          
+
+          
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a></td>
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a></td>
+          
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+
+   	<div class="outer">
+    	<aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      
+      <img id="avatar" src="https://www.gravatar.com/avatar/2ec58acf24bf70ddd571739af8e934e7?s=100&d=identicon"/>
+      
+      <h2 id="name">Korilakkuma</h2>
+      <h3 id="title">I&#39;m disseminating Web Music as Audio Programmer. C, WebAssembly, TypeScript, Audio Signal Processing (ALSA, Web Audio) and Music 💖🎸🎹</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Osaka (sometimes Tokyo), JAPAN</span>
+      
+    </div>
+    <div class="profile-block social-links">
+      <table>
+        <tr>
+          
+<td><a href="//github.com/Korilakkuma" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//youtube.com/rilakkuma3xjapan" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//linkedin.com/in/%e5%8f%8b%e6%b4%8b-%e6%b1%a0%e7%94%b0-901725b8" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <td><a href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+
+    <section id="main">
+    
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+
+        <header class="article-header">
+    <a href="https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/">
+    <h1 class="article-title" itemprop="name">
+        Boot Linux on MacBook Air 2020
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2022-04-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-04-09</time>
+            &middot;
+            2785
+            words
+            &middot;
+            6
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/development">Development</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/operating-system">Operating System</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/linux">Linux</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/ubuntu">Ubuntu</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/macos">macOS</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <p>MacBook Air 2020 (<strong>Intel</strong>) で Linux (Ubuntu) をデュアルブートできるようにしたのでそのメモ書きです.</p>
+<p><strong>万が一のために, ディスクのデータはすべてバックアップをとっておいてください.</strong></p>
+<h1 id="prepare-devices">Prepare Devices</h1>
+<p>Linux をデュアルブートするために, いくつかハードウェアが必要になります.</p>
+<h2 id="usb-メモリ">USB メモリ</h2>
+<p>Linux のインストーラを書き込むために必要です. 8 GB 以上あれば十分です.
+インストーラを書き込むと既存のデータが消えてしまうので, バックアップが必要です
+(そんなに高価なものではないので新しく購入するほうがいいかもしれません).</p>
+<h2 id="外付けキーボード">外付けキーボード</h2>
+<p>搭載キーボードは, <strong>デフォルトでは機能しない</strong>ので必要になります.</p>
+<h2 id="マウス">マウス</h2>
+<p>こちらも, MacBook Air のトラックパッドは機能しないので, 操作を快適にするためにはあったほうがいいかもしれません.
+ただ, 最低限, 外付けキーボードがあれば必要な操作はできます.</p>
+<h1 id="download-image-and-create-installer">Download Image and Create Installer</h1>
+<p><a href="https://ubuntu.com/download/desktop/thank-you?version=20.04.4&amp;architecture=amd64#download">Ubuntu ディスクイメージ</a>をダウンロードします (ちなみに, 2022 / 04 / 09 時点での LTS は 20.04, 最新バージョンが 21.10 です. 今回は, LTS を使いました). また, ディスクイメージをもとに USB メモリにインストーラを作成するために, <a href="https://www.balena.io/etcher/">balenaEtcher</a> を使います (<code>dd</code> コマンドを使う場合は不要です).</p>
+<p>事前に, USB メモリを Disk Utility を使って, <strong>FAT</strong>・<strong>GUID Partition Map</strong> でフォーマットしておきます.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162565377-800dc8d0-e684-4f30-8149-b2b6282eb1f6.gif" alt="USB メモリ フォーマット"></p>
+<p>あとは, balenaEtcher のナビゲーションにしたがって, ディスクイメージを選択して, 書き込み先の USB メモリを指定して, 書き込むだけです.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162566236-6fc3b43b-6a08-48a0-99a3-b1a9ae801577.gif" alt="インストーラの書き込み"></p>
+<h1 id="create-partition-for-linux">Create Partition for Linux</h1>
+<p>Linux をインストールするためのパーティションを作成します.
+Disk Utility を使って, <strong>パーティション</strong>を作成します (<strong>ボリュームではないので注意してください</strong>).
+割り当てたいディスクサイズを選択して, <strong>FAT</strong> でフォーマットします.
+Name は任意です (ただ, あとから判別しやすいようなパーティション名にしておくほうがよいでしょう).</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162567106-2da33cae-205c-4dad-a1f6-f6f7c21a867c.gif" alt="パーティションの作成"></p>
+<p>もし, 割り当てサイズを変更したい場合などは, 以下のように 1 度パーティションを削除して, 再度割り当て直します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162566700-bd088037-1833-4a01-baa5-bb083589279a.gif" alt="パーティションの削除"></p>
+<h1 id="enable-to-boot-from-usb">Enable to boot from USB</h1>
+<p>macOS のデフォルトの設定だと, USB メモリから Ubuntu を起動することはできないので, macOS Recovery を起動して設定を変更します.
+まず, 電源を ON にしたときに (再起動時に), <strong>command + R</strong> を押し続けると, macOS Recovery が起動します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162568106-e0d58420-584b-40eb-93c0-81eb1cf3ea9c.gif" alt="macOS Recovery の起動"></p>
+<p>ユーザーを選択して, パスワードを入力したら, 左上のメニューバーにある, Startup Security Utility を起動します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162568190-aa3d9e24-d0da-4463-b5dd-71e2f0c36d20.png" alt="Startup Security Utility"></p>
+<p>以下のように設定を変更します</p>
+<dl>
+  <dt>Secure Boot</dt>
+  <dd>No Security</dd>
+  <dt>Allowed Boot Media</dt>
+  <dd>Allow booting from external or removable media</dd>
+</dt>
+<p><img src="https://user-images.githubusercontent.com/4006693/162568298-f865f202-6331-4cba-85b0-c32861503b61.png" alt="Startup Security Utility の設定変更"></p>
+<p>最後に, 同じように左上のメニューバーから, Terminal を起動して, <code>csrutil disable</code> と入力します.
+これは, SIP (<strong>S</strong>ystem <strong>I</strong>ntegrity <strong>P</strong>rotection) を (一時的に) 無効にしています (Linux インストールが完了すればもとに戻します).</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162568621-11134909-5c83-4eb6-9d6b-7d832a90b46e.png" alt="Terminal"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162568597-03a4005b-cbc1-4664-ba81-61727bdca697.png" alt="SIP の無効化"></p>
+<p>これで, ようやく, USB メモリに書き込んだインストーラを起動する準備ができました !</p>
+<h1 id="install-linux">Install Linux</h1>
+<p>電源を ON にする前に, インストーラを書き込んだ USB メモリと, 外付けキーボードを接続しておきます.
+起動時に, <strong>option</strong> キーを押し続けると, 起動するディスクを選択することができるので, 最も右側の USB メモリのようなアイコンの <strong>EFIBoot</strong> を選択すると, Ubuntu が起動します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162569662-5dac2d8c-d721-47ad-a886-236607fd0137.gif" alt="起動ディスクの選択"></p>
+<p>「Try Ubuntu」を選択して, ターミナルを起動します (<strong>ここからは, 外付けキーボード, マウスで入力してください</strong>).
+そして, <code>sudo ubiquity -b</code> でインストーラを起動します (<code>-b</code> は, ブートローダーはインストールしないオプションです).</p>
+<p>ブートローダーである GRUB (<strong>GR</strong>and <strong>U</strong>nified <strong>B</strong>ootloader) は, あとから別途インストールします.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162569785-612ffb5e-9e79-48bd-aa71-768dcdbed6df.gif" alt="Try Ubuntu"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162570784-2210e39e-4e7a-432b-bdbb-eff8ab21d728.gif" alt="ターミナルの起動"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162572347-e43a16b7-6143-4d88-b5a1-5683fc90371b.gif" alt="インストーラの起動 (ブートローダーなし)"></p>
+<p>言語や, キーボードレイアウトは自由に選択してください.</p>
+<p>インストールでは「通常のインストール」を選択します (オプションはインストール後でも対応可能なのでどちらでも問題ありません).
+インストールの種類では「それ以外」を選択して, パーティションの割り当てやフォーマットを手動で実行します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162572576-dd133ace-0062-4c33-bc4e-5f948345b5a9.gif" alt="インストール・インストールの種類">
+パーティションの編集では, FAT (fat32) でフォーマットしたパーティション (先に, Linux 用に割り当てたパーティション. おそらく, <code>/dev/nvme0n1p3</code> になっているかと思います. 割り当てたディスク容量などと合わせると確実です) を選択します.</p>
+<dl>
+  <dt>利用方法</dt>
+  <dd>
+    ext4 ジャーナリングファイルシステム<br />
+    (ちなみに, extN は Linux の標準的なファイルシステムです)
+  </dd>
+  <dt>パーティションの初期化</dt>
+  <dd>チェックをつける</dd>
+  <dt>マウントポイント</dt>
+  <dd><code>/</code></dd>
+</dl>
+<p>上記の設定で, パーティションの編集をします.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162572787-9b44fc43-6a08-4e59-90dc-836506b0479b.gif" alt="パーティションの編集"></p>
+<p>あとは, タイムゾーンやユーザー名, パスワードなどを入力してインストールを開始します.</p>
+<h2 id="install-grub">Install GRUB</h2>
+<p>先ほどまでの手順では, Ubuntu をディスクにインストールしただけなので, <strong>起動することはできません</strong>.
+Linux を起動するための, ブートローダーである GRUB をインストールします.</p>
+<p>まず, 同じ手順で, 再度, USB メモリから Ubuntu を起動して, 「Try Ubuntu」を選択して, ターミナルを起動します.</p>
+<p>ターミナルを起動したら以下のコマンドを実行します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo -s
+</span></span><span style="display:flex;"><span>$ mount /dev/nvme0n1p3 /mnt <span style="color:#75715e"># Ubuntu をインストールしたパーティションをマウント</span>
+</span></span><span style="display:flex;"><span>$ mount /dev/nvme0n1p1 /mnt/boot/efi  <span style="color:#75715e"># EFI (Extensible Firmware Interface) のパーティションをマウント</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">for</span> i in /dev /dev/pts /proc /sys /run; <span style="color:#66d9ef">do</span> sudo mount -B $i /mnt$i; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>$ sudo chroot /mnt
+</span></span><span style="display:flex;"><span>$ grub-install --force /dev/nvme0n1
+</span></span><span style="display:flex;"><span>$ update-grub
+</span></span></code></pre></div><p><img src="https://user-images.githubusercontent.com/4006693/162574981-f969a856-f3ca-48a1-b84f-4f8f7bd96cb6.jpeg" alt="マウント"></p>
+<p><code>/dev/nvme0n1pX</code> の数値の部分は, もしかしたら異なる可能性もあるので, 以下のコマンドで確認しておくと確実です.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ lsblk
+</span></span></code></pre></div><p><img src="https://user-images.githubusercontent.com/4006693/162574953-52f3b563-e872-472a-97c7-56fc8a98f8f4.jpeg" alt="lsblk の出力"></p>
+<p><code>grub-install</code> では警告は発生しますが, エラーが発生していなければ問題ありません.
+<code>update-grub</code> で 「cannot find a GRUB drive for<code>/dev/sda1</code>.」 とエラーが発生するようであれば, USB メモリを取り外して, 再度 <code>update-grub</code> を実行してみてください.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162575019-c35ed63d-2360-46ca-aab9-411ca727a907.jpeg" alt="grub-install"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162575059-a5e50f84-20fb-4b6f-9b4f-89c217269f42.jpeg" alt="update-grub でエラー"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162575078-c2c6ab13-0d27-485c-96af-f3a6db3ec0fc.jpeg" alt="USB メモリを外して, update-grub を実行"></p>
+<p>ここまで完了したら, 再起動します.</p>
+<h1 id="boot-linux">Boot Linux</h1>
+<p>USB メモリを外し, option キーを押しながら電源を ON にして, 今度は, ディスクのようなアイコンの <strong>EFIBoot</strong> を選択して起動すると, GRUB のターミナルが起動します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub&gt; ls
+</span></span></code></pre></div><p>と入力し, <code>(hdX,gptY)</code> と表示されているデバイスに対して, しらみつぶし (といっても, 数としては多くないですが &hellip;) に,
+以下のコマンドを入力すると, いずれかで Ubuntu が起動します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub&gt; configfile <span style="color:#f92672">(</span>hd0,gpt1<span style="color:#f92672">)</span>/boot/grub/grub.cfg
+</span></span></code></pre></div><p><img src="https://user-images.githubusercontent.com/4006693/162574093-f84fe44d-5599-45aa-8c74-f9e981f5f064.gif" alt="GRUB ターミナル"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/176887035-a4c8afe5-6ac0-4b8b-8ec6-63b093e3ebce.png" alt="GRUB ls"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/176887060-494fe0f1-6b34-4c52-9fe0-a6185c654a55.png" alt="GRUB configfile (hdX,gptY)/boot/grub/grub.cfg"></p>
+<p>Ubuntu がディスクから起動できたら, 再度, macOS Recovery を起動して, SIP の設定をもとに戻しておきます.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162573998-e93ce08f-109c-4a8d-8c06-c5728404c688.gif" alt="Ubuntu を MacBook Air でブート"></p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162574153-9c42a9d0-5bab-4f9d-8d4d-d89cfc261e34.png" alt="Ubuntu デスクトップ画面"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ csrutil enable
+</span></span></code></pre></div><p>また, Macintosh HD を選択すれば, macOS が起動できることも確認しておきましょう.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162607249-f0a2a610-bb24-4942-bf15-f38209f2d59a.gif" alt="macOS を起動"></p>
+<h2 id="enable-devices">Enable Devices</h2>
+<p>2016 年以降の Mac には, T2 セキュリティチップがあり, 搭載のキーボードやトラックパッド, オーディオデバイス, WiFi はそのままでは動作しません. さいわい, ドライバーや Linux カーネルとパッチをインストールすれば動作します.</p>
+<p>ドライバーやパッチは, ネットワーク経由で取得するので, インターネットに接続している必要があります.
+初期状態では WiFi が動作しないので, スマートフォンの有線テザリングなどを利用してインターネットに接続します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/167605272-5ca1262f-9cf0-48eb-8dae-c88cd62f66d4.jpeg" alt="有線テザリングでネットワークに接続"></p>
+<h3 id="install-drivers">Install Drivers</h3>
+<p>キーボード, トラックパッド, オーディオデバイスのドライバーをインストールします.</p>
+<p><a href="https://wiki.t2linux.org/guides/dkms/">DKMS</a> のインストール.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt -y install dkms
+</span></span></code></pre></div><p><a href="https://wiki.t2linux.org/guides/dkms/#installing-modules">BCE</a> (<strong>B</strong>uffer <strong>C</strong>opy <strong>E</strong>ngine) のインストール</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo git clone https://github.com/t2linux/apple-bce-drv /usr/src/apple-bce-0.2
+</span></span><span style="display:flex;"><span>$ cd /usr/src/apple-bce-0.2
+</span></span><span style="display:flex;"><span>$ sudo vi dkms.conf
+</span></span></code></pre></div><p>dkms.conf に以下の設定を記述します.</p>
+<pre tabindex="0"><code>PACKAGE_NAME=&#34;apple-bce&#34;
+PACKAGE_VERSION=&#34;0.2&#34;
+MAKE[0]=&#34;make KVERSION=$kernelver&#34;
+CLEAN=&#34;make clean&#34;
+BUILT_MODULE_NAME[0]=&#34;apple-bce&#34;
+DEST_MODULE_LOCATION[0]=&#34;/kernel/drivers/misc&#34;
+AUTOINSTALL=&#34;yes&#34;
+</code></pre><p>dkms.conf に設定を書き込んだら, 以下のコマンドを実行します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo dkms install -m apple-bce -v 0.2
+</span></span></code></pre></div><p>Linux カーネルにモジュールをロードします.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo modprobe apple_bce
+</span></span><span style="display:flex;"><span>$ sudo modprobe apple_ib_tb
+</span></span><span style="display:flex;"><span>$ sudo modprobe apple_ib_als
+</span></span></code></pre></div><p>以上で, キーボード, トラックパッド, オーディオデバイスが動作します.</p>
+<p>あとは, 起動時にモジュールをロードするように設定を追記します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo -s
+</span></span><span style="display:flex;"><span>$ echo apple-bce &gt;&gt; /etc/modules-load.d/t2.conf
+</span></span></code></pre></div>
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/" data-id="ecd8a696eefd48484c6b520f7a6062d2" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+
+    
+<nav id="article-nav">
+    
+
+    
+    <a href="https://rilakkuma3xjapan.website/posts/unix-v6-simulator/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Install UNIX V6 simulator</div>
+    </a>
+    
+</nav>
+
+
+</article>
+
+
+<section id="comments">
+    <div id="disqus_thread">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "Korilakkuma" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+</section>
+
+
+    </section>
+
+   	
+    	<aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/audio">
+                    audio
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/development">
+                    development
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/operating-system">
+                    operating-system
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/programming">
+                    programming
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/dotfiles">
+                    dotfiles
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/language-server-protocol">
+                    language-server-protocol
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/linux">
+                    linux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/macos">
+                    macos
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11">
+                    pdp-11
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11/40">
+                    pdp-11/40
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/tmux">
+                    tmux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/ubuntu">
+                    ubuntu
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix">
+                    unix
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix-v6">
+                    unix-v6
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/vim">
+                    vim
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/wat">
+                    wat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/web-audio-api">
+                    web-audio-api
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly">
+                    webassembly
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly-text-format">
+                    webassembly-text-format
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/zsh">
+                    zsh
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/dotfiles" style="font-size: 12px;">dotfiles</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/language-server-protocol" style="font-size: 12px;">language-server-protocol</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/linux" style="font-size: 12px;">linux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/macos" style="font-size: 12px;">macos</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11" style="font-size: 12px;">pdp-11</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11/40" style="font-size: 12px;">pdp-11/40</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/tmux" style="font-size: 12px;">tmux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/ubuntu" style="font-size: 12px;">ubuntu</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix" style="font-size: 12px;">unix</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix-v6" style="font-size: 12px;">unix-v6</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/vim" style="font-size: 12px;">vim</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/wat" style="font-size: 12px;">wat</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/web-audio-api" style="font-size: 12px;">web-audio-api</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly" style="font-size: 12px;">webassembly</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly-text-format" style="font-size: 12px;">webassembly-text-format</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/zsh" style="font-size: 12px;">zsh</a>
+        
+    </div>
+</div>
+
+
+
+
+
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022
+      Copyright (c) <a href="https://rilakkuma3xjapan.website/about/">Korilakkuma</a>
+    </div>
+  </div>
+</footer>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-41390233-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://rilakkuma3xjapan.website/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+</body>
+</html>

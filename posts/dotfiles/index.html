@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <title>Update dotfiles &middot; rilakkuma3xjapan</title>
+    <meta name="generator" content="Hugo 0.105.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Korilakkuma">
+    
+      <meta name="description" content="dotfiles を更新しました">
+    
+    
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="alternate" type="application/rss+xml" title="rilakkuma3xjapan" />
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="feed" type="application/rss+xml" title="rilakkuma3xjapan" />
+    
+    <link rel="canonical" href="https://rilakkuma3xjapan.website/posts/dotfiles/"/>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/style.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/monokai.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Update dotfiles" />
+<meta property="og:description" content="dotfiles を更新しました" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rilakkuma3xjapan.website/posts/dotfiles/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-29T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-05-29T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Update dotfiles">
+<meta itemprop="description" content="dotfiles を更新しました"><meta itemprop="datePublished" content="2022-05-29T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-05-29T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2180">
+<meta itemprop="keywords" content="dotfiles,Zsh,Vim,Language Server Protocol,Tmux," />
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Update dotfiles"/>
+<meta name="twitter:description" content="dotfiles を更新しました"/>
+
+    
+
+    
+    <style>
+        #main {
+            display: 100% !important;
+        }
+
+        @media screen and (min-width: 1200px) {
+            #main {
+                width: calc(200px + 52.307692307692314%);
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            #sidebar {
+                 width: calc(50px + 21.53846153846154%);
+            }
+        }
+    </style>
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="https://rilakkuma3xjapan.website" id="logo">
+          
+          <i class="logo" style="background-image: url('https://rilakkuma3xjapan.website/icon.png')"></i>
+          
+          <span class="site-title">rilakkuma3xjapan</span>
+      </a>
+      <nav id="main-nav">
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a>
+          
+          
+          
+          
+          
+          
+
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a>
+          
+
+          
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a>
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a>
+          
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://rilakkuma3xjapan.website/profile.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a></td>
+          
+          
+          
+          
+          
+          
+
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a></td>
+          
+
+          
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a></td>
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a></td>
+          
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+
+   	<div class="outer">
+    	<aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      
+      <img id="avatar" src="https://www.gravatar.com/avatar/2ec58acf24bf70ddd571739af8e934e7?s=100&d=identicon"/>
+      
+      <h2 id="name">Korilakkuma</h2>
+      <h3 id="title">I&#39;m disseminating Web Music as Audio Programmer. C, WebAssembly, TypeScript, Audio Signal Processing (ALSA, Web Audio) and Music 💖🎸🎹</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Osaka (sometimes Tokyo), JAPAN</span>
+      
+    </div>
+    <div class="profile-block social-links">
+      <table>
+        <tr>
+          
+<td><a href="//github.com/Korilakkuma" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//youtube.com/rilakkuma3xjapan" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//linkedin.com/in/%e5%8f%8b%e6%b4%8b-%e6%b1%a0%e7%94%b0-901725b8" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <td><a href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+
+    <section id="main">
+    
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+
+        <header class="article-header">
+    <a href="https://rilakkuma3xjapan.website/posts/dotfiles/">
+    <h1 class="article-title" itemprop="name">
+        Update dotfiles
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2022-05-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-05-29</time>
+            &middot;
+            2180
+            words
+            &middot;
+            5
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/programming">Programming</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/development">Development</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/dotfiles">dotfiles</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/zsh">Zsh</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/vim">Vim</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/language-server-protocol">Language Server Protocol</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/tmux">Tmux</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="dotfiles">dotfiles</h1>
+<p>dotfiles をアップデートしたので, 備忘録も兼ねて, 現時点での <a href="https://github.com/Korilakkuma/dotfiles">my dotfiles</a> の構成をさらします.</p>
+<p>ワンライナーインストール可能なように, Make (<code>/Makefile</code>) を使います (環境依存性が少なければいいので, Bourne Shell などでもいいでしょう).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span>DOTFILES_EXCLUDES <span style="color:#f92672">:=</span> .DS_Store .git .gitmodules
+</span></span><span style="display:flex;"><span>DOTFILES_TARGET   <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>wildcard .??*<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>DOTFILES_DIR      <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>PWD<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>DOTFILES_FILES    <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>filter-out <span style="color:#66d9ef">$(</span>DOTFILES_EXCLUDES<span style="color:#66d9ef">)</span>, <span style="color:#66d9ef">$(</span>DOTFILES_TARGET<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">deploy            </span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	@<span style="color:#66d9ef">$(</span>foreach val, <span style="color:#66d9ef">$(</span>DOTFILES_FILES<span style="color:#66d9ef">)</span>, ln -sfnv <span style="color:#66d9ef">$(</span>abspath <span style="color:#66d9ef">$(</span>val<span style="color:#66d9ef">))</span> <span style="color:#66d9ef">$(</span>HOME<span style="color:#66d9ef">)</span>/<span style="color:#66d9ef">$(</span>val<span style="color:#66d9ef">)</span>;<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">init              </span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	bash ./etc/init/install.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clean             </span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	@<span style="color:#66d9ef">$(</span>foreach val, <span style="color:#66d9ef">$(</span>DOTFILES_FILES<span style="color:#66d9ef">)</span>, rm -rf <span style="color:#66d9ef">$(</span>HOME<span style="color:#66d9ef">)</span>/<span style="color:#66d9ef">$(</span>val<span style="color:#66d9ef">)</span>;<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>重要なのは, <strong>デプロイ</strong> (ホームディレクトリにシンボリックリンクを作成する処理) と<strong>イニシャライズ</strong> (インストールやビルド) に分けて実行可能にしておくことです.
+なぜなら, デプロイは何度も実行する可能性がある, 一方で, イニシャライズはリポジトリをダウンロードしたときにしか実行しないからです.</p>
+<p><code>/etc</code> には, プラットフォームごと (現状は, mac のみですが &hellip;) の初期化のフックとなるスクリプトが含まれており,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ make init
+</span></span></code></pre></div><p>このワンライナーコマンドで, プラットフォームに応じた初期化 (主に, アプリケーションのダウンロードとインストール) が実行されます.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>cwd<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>dirname $0<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> $OSTYPE in
+</span></span><span style="display:flex;"><span>  darwin*<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Mac OS&#34;</span>
+</span></span><span style="display:flex;"><span>    source $cwd/mac.sh
+</span></span><span style="display:flex;"><span>    ;;
+</span></span><span style="display:flex;"><span>  linux*<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Linux&#34;</span>
+</span></span><span style="display:flex;"><span>    source $cwd/linux.sh
+</span></span><span style="display:flex;"><span>    ;;
+</span></span><span style="display:flex;"><span>  msys*<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Windows&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Not created ...</span>
+</span></span><span style="display:flex;"><span>    source $cwd/windows.sh
+</span></span><span style="display:flex;"><span>    ;;
+</span></span><span style="display:flex;"><span>  *<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Not compatible&#34;</span>
+</span></span><span style="display:flex;"><span>    ;;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">esac</span>
+</span></span></code></pre></div><h1 id="zsh">Zsh</h1>
+<p>以下, 3 つの設定ごとにファイルを分割し, <code>/.zsh/init.sh</code> でまとめて実行します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>source $HOME/.zsh/env.sh
+</span></span><span style="display:flex;"><span>source $HOME/.zsh/basic.sh
+</span></span><span style="display:flex;"><span>source $HOME/.zsh/plugins.sh
+</span></span></code></pre></div><ul>
+<li>シェル環境変数の設定 (<code>/.zsh/env.sh</code>)</li>
+<li>Zsh の設定・シェル関数・alias など (<code>/.zsh/basic.sh</code>)</li>
+<li>プラグインインストール (<code>/.zsh/plugins.sh</code>)</li>
+</ul>
+<p><code>/.zsh/init.sh</code> は, <code>/.zshrc</code> を読み込んだときに実行されます.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>source $HOME/.zsh/init.sh
+</span></span></code></pre></div><p>実は, これまでプラグインをまったく使っていなかったので, Zsh の設定が煩雑だったのですが, プライグインを導入したことで, 必要最低限の設定 (<code>setopt XXX</code>) になりました.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>bindkey -e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>autoload -Uz compinit
+</span></span><span style="display:flex;"><span>compinit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>setopt auto_cd
+</span></span><span style="display:flex;"><span>setopt auto_pushd
+</span></span><span style="display:flex;"><span>setopt cdable_vars
+</span></span><span style="display:flex;"><span>setopt correct
+</span></span><span style="display:flex;"><span>setopt extended_glob
+</span></span><span style="display:flex;"><span>setopt hist_ignore_all_dups
+</span></span><span style="display:flex;"><span>setopt hist_ignore_dups
+</span></span><span style="display:flex;"><span>setopt hist_ignore_space
+</span></span><span style="display:flex;"><span>setopt hist_reduce_blanks
+</span></span><span style="display:flex;"><span>setopt ignore_eof
+</span></span><span style="display:flex;"><span>setopt interactivecomments
+</span></span><span style="display:flex;"><span>setopt no_flow_control
+</span></span><span style="display:flex;"><span>setopt noautoremoveslash
+</span></span><span style="display:flex;"><span>setopt print_eight_bit
+</span></span><span style="display:flex;"><span>setopt prompt_subst
+</span></span><span style="display:flex;"><span>setopt pushd_ignore_dups
+</span></span></code></pre></div><p>プラグインを導入するには, プラグインマネージャが必要になります. <a href="https://ohmyz.sh/">Oh My Zsh</a> が有名なのかなと思いますが, プラグイン導入によって速さが犠牲になりすぎるのは嫌だったので, <a href="https://qiita.com/vintersnow/items/cef72aebb2d55a82f212">パフォーマンスで優位</a>そうな, <a href="https://github.com/zplug/zplug">zplug</a> を使うことにしました.</p>
+<p>プラグイン自体も, テーマ (全体の外観), コマンド補完, シンタックスハイライトなど必要最低限の導入にしています.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-zsh" data-lang="zsh"><span style="display:flex;"><span>source $ZPLUG_HOME/init.zsh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># command</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;zsh-users/zsh-autosuggestions&#34;</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;zsh-users/zsh-completions&#34;</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;zsh-users/zsh-history-substring-search&#34;</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;zsh-users/zsh-syntax-highlighting&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># `cd`</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;b4b4r07/enhancd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># util</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;mafredri/zsh-async&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># theme, color</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;sindresorhus/pure&#34;</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#34;chrissicool/zsh-256color&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># zplug manage zplug</span>
+</span></span><span style="display:flex;"><span>zplug <span style="color:#e6db74">&#39;zplug/zplug&#39;</span>, hook-build:<span style="color:#e6db74">&#39;zplug --self-manage&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ! zplug check;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  printf <span style="color:#e6db74">&#34;Install? [y/N]: &#34;</span>  <span style="color:#75715e"># no line break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> read -q:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;&#34;</span>  <span style="color:#75715e"># for line break</span>
+</span></span><span style="display:flex;"><span>    zplug install
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>zplug load --verbose
+</span></span></code></pre></div><h1 id="vim">Vim</h1>
+<p>Zsh と同様に, 設定ごとにファイルを分割します. 分割した設定ファイルは <code>/.vim/init.vim</code> で読み込まれます.</p>
+<ul>
+<li>Vim の基本設定 (<code>/.vim/basic.vim</code>)</li>
+<li>プラグインインストール (<code>/.vim/plugins.vim</code>)</li>
+</ul>
+<p>今回の dotfiles の更新で最も大きな差分は, Vim の設定ファイルであり, 特に, <strong>Language Server</strong> を利用可能にするプラグインを導入したことによって, コード補完や定義位置ジャンプなどのために, <strong>プログラミング言語ごとに導入していたプラグインを一掃</strong>して, 設定ファイルをシンプルにすることができました.</p>
+<p>カラースキーム, ファイラー, git 連携のプラグインなどで, プログラミング言語系のプラグインは LSP のみです.</p>
+<pre tabindex="0"><code>call vundle#begin()
+
+Plugin &#39;VundleVim/Vundle.vim&#39;
+
+Plugin &#39;prabirshrestha/vim-lsp&#39;
+Plugin &#39;mattn/vim-lsp-settings&#39;
+Plugin &#39;prabirshrestha/asyncomplete.vim&#39;
+Plugin &#39;prabirshrestha/asyncomplete-lsp.vim&#39;
+Plugin &#39;hrsh7th/vim-vsnip&#39;
+Plugin &#39;hrsh7th/vim-vsnip-integ&#39;
+
+Plugin &#39;editorconfig/editorconfig-vim&#39;
+Plugin &#39;nathanaelkane/vim-indent-guides&#39;
+Plugin &#39;alvan/vim-closetag&#39;
+
+Plugin &#39;tpope/vim-fugitive&#39;
+Plugin &#39;airblade/vim-gitgutter&#39;
+
+Plugin &#39;preservim/nerdtree&#39;
+Plugin &#39;vim-airline/vim-airline&#39;
+Plugin &#39;edkolev/tmuxline.vim&#39;
+Plugin &#39;tpope/vim-surround&#39;
+
+Plugin &#39;tomasr/molokai&#39;
+
+call vundle#end()
+</code></pre><h2 id="language-server-protocol-lsp">Language Server Protocol (LSP)</h2>
+<p>Language Server Protocol (LSP) (の実装である <a href="https://langserver.org/">Language Server</a>) を導入するメリットは, ずばり, これまで, それぞれのエディタや IDE が各々実装してきたコード補完やフォーマットを Language Server で一元管理することによって, これまで, エディタ・IDE ごと, プログラミング言語ごとにあった実装の関係 N : N が, 1 : N の関係で構成されることです (実際, Language Server を利用可能にするプラグインを導入したことで, 個々のプログラミング言語の Vim プラグインが不要になりました).</p>
+<table>
+<thead>
+<tr>
+<th>C/C++</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://user-images.githubusercontent.com/4006693/133930643-28332ed2-7f13-4d72-99b0-9a80ae824cb1.gif" alt="C/C++ コード補完"></td>
+<td><img src="https://user-images.githubusercontent.com/4006693/133930646-067d9152-14a8-4be6-aa62-e59710a821ad.gif" alt="TypeScript コード補完"></td>
+</tr>
+</tbody>
+</table>
+<p>コード補完や定義位置ジャンプといった機能は, プログラミング言語が変わっても本質的に同じです. Language Server を利用しない場合, エディタや IDE の機能とプログラミング言語特有の機能をひとつにして実装されるので, <strong>密結合</strong>になります.</p>
+<p>Language Server Protocol は, プログラミング言語とエディタや IDE との間で交換される JSON-RPC 仕様と, それによって実現される機能を指しています. エディタや IDE など, <strong>Language Server Client</strong> から送信される, コード補完や定義位置ジャンプなどの固有の機能要求に対して, 演算を実行して応答を返す <strong>Language Server</strong> の 1 : N の関係で構成されます.</p>
+<h1 id="tmux">Tmux</h1>
+<p>iTerm2 で Tmux を起動してコーディングするので, Tmux の設定ファイル (<code>/.tmux.conf</code>) もあります.</p>
+<pre tabindex="0"><code># 起動時のシェルを zsh にする
+set-option -g default-shell /usr/local/bin/zsh
+
+# 256 色表示できるようにする
+set-option -g default-terminal screen-256color
+set -g terminal-overrides &#39;xterm:colors=256&#39;
+
+# prefix キー を C-q に変更
+set -g prefix C-q
+
+# C-b のキーバインドを解除
+unbind C-b
+
+# ステータスバーをトップに配置する
+set-option -g status-position top
+
+# 左右のステータスバーの長さを決定する
+set-option -g status-left-length 90
+set-option -g status-right-length 90
+
+# #P ペイン番号
+# 最左に表示
+set-option -g status-left &#39;#H:[#P]&#39;
+
+# WiFi, バッテリー残量, 現在時刻
+# 最右に表示
+set-option -g status-right &#39;#(wifi) #(battery --tmux) [%Y-%m-%d(%a) %H:%M]&#39;
+
+# ステータスバーを 1 sec 間隔で再描画
+set-option -g status-interval 1
+
+# センタリング
+set-option -g status-justify centre
+
+# ステータスバーの色
+set-option -g status-bg &#34;colour238&#34;
+
+# ステータスラインの文字色
+set-option -g status-fg &#34;colour255&#34;
+
+# ペインの移動 (Vim のキーバンドに変更)
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# ペインのリサイズ (Vim のキーバンドに変更)
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# ペインを垂直方向に分割
+bind | split-window -h
+
+# ペインを水平方向に分割
+bind - split-window -v
+
+# 番号基準値を変更
+set-option -g base-index 1
+
+# マウス操作を有効にする
+set-option -g mouse on
+bind -n WheelUpPane if-shell -F -t = &#34;#{mouse_any_flag}&#34; &#34;send-keys -M&#34; &#34;if -Ft= &#39;#{pane_in_mode}&#39; &#39;send-keys -M&#39; &#39;copy-mode -e&#39;&#34;
+
+# コピーモードを設定する, Vim キーバインドを使う
+setw -g mode-keys vi
+
+# 選択
+bind -T copy-mode-vi v send -X begin-selection
+
+# 行選択
+bind -T copy-mode-vi V send -X select-line
+
+# 矩形選択
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+
+# ヤンク
+bind -T copy-mode-vi y send -X copy-selection
+
+# 行ヤンク
+bind -T copy-mode-vi Y send -X copy-line
+
+# ペースト
+bind-key C-p paste-buffer
+</code></pre><h1 id="リファレンス">リファレンス</h1>
+<ul>
+<li><a href="https://qiita.com/b4b4r07/items/b70178e021bef12cd4a2">最強の dotfiles 駆動開発と GitHub で管理する運用方法</a></li>
+<li><a href="https://langserver.org/">Langserver.org</a></li>
+<li><a href="https://microsoft.github.io/language-server-protocol/implementors/servers/">LSP / LSIF</a></li>
+<li><a href="https://mattn.kaoriya.net/software/vim/20191231213507.htm">Vim をモダンな IDE に変える LSP の設定</a></li>
+<li><a href="https://qiita.com/mattn/items/e62b9f16bc487a271a7f">vim-lsp の導入コストを下げるプラグイン vim-lsp-settings を書いた。</a></li>
+<li><a href="https://qiita.com/shin-ch13/items/9d207a70ccc8467f7bab">tmuxを必要最低限で入門して使う</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://rilakkuma3xjapan.website/posts/dotfiles/" data-id="22831f3682873967feb16840764ed0e9" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://rilakkuma3xjapan.website/posts/dotfiles/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+
+    
+<nav id="article-nav">
+    
+    <a href="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Audio Processing by WebAssembly</div>
+    </a>
+    
+
+    
+</nav>
+
+
+</article>
+
+
+<section id="comments">
+    <div id="disqus_thread">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "Korilakkuma" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+</section>
+
+
+    </section>
+
+   	
+    	<aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/audio">
+                    audio
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/development">
+                    development
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/operating-system">
+                    operating-system
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/programming">
+                    programming
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/dotfiles">
+                    dotfiles
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/language-server-protocol">
+                    language-server-protocol
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/linux">
+                    linux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/macos">
+                    macos
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11">
+                    pdp-11
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11/40">
+                    pdp-11/40
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/tmux">
+                    tmux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/ubuntu">
+                    ubuntu
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix">
+                    unix
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix-v6">
+                    unix-v6
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/vim">
+                    vim
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/wat">
+                    wat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/web-audio-api">
+                    web-audio-api
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly">
+                    webassembly
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly-text-format">
+                    webassembly-text-format
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/zsh">
+                    zsh
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/dotfiles" style="font-size: 12px;">dotfiles</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/language-server-protocol" style="font-size: 12px;">language-server-protocol</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/linux" style="font-size: 12px;">linux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/macos" style="font-size: 12px;">macos</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11" style="font-size: 12px;">pdp-11</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11/40" style="font-size: 12px;">pdp-11/40</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/tmux" style="font-size: 12px;">tmux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/ubuntu" style="font-size: 12px;">ubuntu</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix" style="font-size: 12px;">unix</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix-v6" style="font-size: 12px;">unix-v6</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/vim" style="font-size: 12px;">vim</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/wat" style="font-size: 12px;">wat</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/web-audio-api" style="font-size: 12px;">web-audio-api</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly" style="font-size: 12px;">webassembly</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly-text-format" style="font-size: 12px;">webassembly-text-format</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/zsh" style="font-size: 12px;">zsh</a>
+        
+    </div>
+</div>
+
+
+
+
+
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022
+      Copyright (c) <a href="https://rilakkuma3xjapan.website/about/">Korilakkuma</a>
+    </div>
+  </div>
+</footer>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-41390233-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://rilakkuma3xjapan.website/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+</body>
+</html>

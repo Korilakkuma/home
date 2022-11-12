@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>macOS on rilakkuma3xjapan</title>
+    <link>https://rilakkuma3xjapan.website/tags/macos/</link>
+    <description>Recent content in macOS on rilakkuma3xjapan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rilakkuma3xjapan.website/tags/macos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boot Linux on MacBook Air 2020</title>
+      <link>https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/</link>
+      <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rilakkuma3xjapan.website/posts/boot-linux-on-macbook-air-2020/</guid>
+      <description>MacBook Air 2020 (Intel) で Linux (Ubuntu) をデュアルブートできるようにしたのでそのメモ書きです. 万が一のために, ディスクのデータはすべてバックアップをとっておいてくださ</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+    <title>Audio Processing by WebAssembly &middot; rilakkuma3xjapan</title>
+    <meta name="generator" content="Hugo 0.105.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Korilakkuma">
+    
+      <meta name="description" content="WebAssembly でオーディオ処理を実装する">
+    
+    
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="alternate" type="application/rss+xml" title="rilakkuma3xjapan" />
+      <link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" rel="feed" type="application/rss+xml" title="rilakkuma3xjapan" />
+    
+    <link rel="canonical" href="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/"/>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/style.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/monokai.css">
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Audio Processing by WebAssembly" />
+<meta property="og:description" content="WebAssembly でオーディオ処理を実装する" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-05-14T00:00:00+00:00" />
+
+
+    <meta itemprop="name" content="Audio Processing by WebAssembly">
+<meta itemprop="description" content="WebAssembly でオーディオ処理を実装する"><meta itemprop="datePublished" content="2022-05-14T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-05-14T00:00:00+00:00" />
+<meta itemprop="wordCount" content="3456">
+<meta itemprop="keywords" content="WebAssembly,WebAssembly Text format,WAT,Web Audio API," />
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Audio Processing by WebAssembly"/>
+<meta name="twitter:description" content="WebAssembly でオーディオ処理を実装する"/>
+
+    
+
+    
+    <style>
+        #main {
+            display: 100% !important;
+        }
+
+        @media screen and (min-width: 1200px) {
+            #main {
+                width: calc(200px + 52.307692307692314%);
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            #sidebar {
+                 width: calc(50px + 21.53846153846154%);
+            }
+        }
+    </style>
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="https://rilakkuma3xjapan.website" id="logo">
+          
+          <i class="logo" style="background-image: url('https://rilakkuma3xjapan.website/icon.png')"></i>
+          
+          <span class="site-title">rilakkuma3xjapan</span>
+      </a>
+      <nav id="main-nav">
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a>
+          
+          
+          
+          
+          
+          
+
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a>
+          
+
+          
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a>
+          
+          
+          
+          <a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a>
+          
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://rilakkuma3xjapan.website/profile.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/">Home</a></td>
+          
+          
+          
+          
+          
+          
+
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/about/">About</a></td>
+          
+
+          
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/tags/">Tags</a></td>
+          
+          
+          
+          <td><a class="main-nav-link" href="https://rilakkuma3xjapan.website/categories/">Categories</a></td>
+          
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="sitesearch" value="https://rilakkuma3xjapan.website" />
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+
+   	<div class="outer">
+    	<aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      
+      <img id="avatar" src="https://www.gravatar.com/avatar/2ec58acf24bf70ddd571739af8e934e7?s=100&d=identicon"/>
+      
+      <h2 id="name">Korilakkuma</h2>
+      <h3 id="title">I&#39;m disseminating Web Music as Audio Programmer. C, WebAssembly, TypeScript, Audio Signal Processing (ALSA, Web Audio) and Music 💖🎸🎹</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>Osaka (sometimes Tokyo), JAPAN</span>
+      
+    </div>
+    <div class="profile-block social-links">
+      <table>
+        <tr>
+          
+<td><a href="//github.com/Korilakkuma" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//youtube.com/rilakkuma3xjapan" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<td><a href="//linkedin.com/in/%e5%8f%8b%e6%b4%8b-%e6%b1%a0%e7%94%b0-901725b8" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <td><a href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</aside>
+
+
+    <section id="main">
+    
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+
+        <header class="article-header">
+    <a href="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/">
+    <h1 class="article-title" itemprop="name">
+        Audio Processing by WebAssembly
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2022-05-14 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-05-14</time>
+            &middot;
+            3456
+            words
+            &middot;
+            7
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/programming">Programming</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/categories/audio">Audio</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/webassembly">WebAssembly</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/webassembly-text-format">WebAssembly Text format</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/wat">WAT</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://rilakkuma3xjapan.website/tags/web-audio-api">Web Audio API</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="webassembly">WebAssembly</h1>
+<p><strong>WebAssembly</strong> とは, スタックマシンのための<strong>仮想命令セットアーキテクチャ</strong> (<strong>Virtual ISA</strong>: <strong>V</strong>irtual <strong>I</strong>nstruction <strong>S</strong>et <strong>A</strong>rchitecture) のことで, 「仮想」と命名されているように, 特定の物理的なハードウェアを前提として設計にはなっていません (逆に, 一般的な ISA は特定のハードウェアに依存します). 厳密には異なるかもしれませんが, Java の経験のある方であれば, JVM に近いイメージかもしれません (命名がややこしいのですが, WebAssembly は Virtual ISA でアセンブリ言語ではありません. WebAssembly におけるアセンブリ言語相当の言語が後述する WAT です).</p>
+<p>つまり, Web ブラウザだけでなく, Node.js や組み込み環境でも実行可能です. Web ブラウザであれば, モダンブラウザすべてが対応しています (ただ, デバッガーなどが豊富なのは Firefox や Chrome になります).</p>
+<h2 id="webassembly-のメリット">WebAssembly のメリット</h2>
+<h3 id="実行パフォーマンスの改善">実行パフォーマンスの改善</h3>
+<p>おそらく, WebAssembly で処理を実装する最大の理由となるでしょう. しかしながら, 一般的にかんちがいされがちなのですが (わたしもその一人でした &hellip;), <strong>WebAssembly で実装しても必ずしも実行パフォーマンスが改善するわけではありません</strong>. また, <strong>実装コストに見合うだけの改善を得られるとも限りません</strong>. 理由としては, <strong>JavaScript から WebAssembly で実装された関数を呼び出すオーバヘッドがそれなりに大きい</strong>ことや, 現状の WebAssembly は, <strong>数値 (32 bit, 64 bit の整数と浮動小数点数) 演算に対して高速であり, 構造化されたデータ (文字列や配列) をあつかうことをあまり得意としていません</strong>. <strong>線形メモリ</strong> (C/C++ でいうヒープ領域, JavaScript でいう ArrayBuffer のようなメモリ領域) を <strong>JavaScript と WebAssembly の間でポインタのように共有して操作する必要がある</strong>ので実装コストが肥大化しがちです. また, <strong>DOM を直接操作することもできない</strong>ので, 実際の開発では, すべてを WebAssembly で書き換えるのは現実的に不可能であり, <strong>最適化する処理を十分に検討する必要があります</strong>.</p>
+<h3 id="既存ライブラリの活用">既存ライブラリの活用</h3>
+<p>もし, C/C++ や Rust, Go のような高級言語で実装して, <a href="https://emscripten.org/">Ecmascripten</a> などのツールチェーンを利用して, WebAssembly の実行ファイル (wasm) を生成する場合, これまでの資産の多くが活用できます. しかし, 実行パフォーマンスを最大限に引き出したい場合, 後述する WAT や AssemblyScript ほどの最適化を望めないかもしれません. WebAssembly を使う目的を明確にして, このメリットを考える必要はあります.</p>
+<h3 id="移植性とセキュリティ">移植性とセキュリティ</h3>
+<p>WebAssembly は, Web ブラウザで実行するためのテクノロジーとして始まった経緯があり, どこでも実行できるサンドボックス環境へ発展しました. また, 非常に安全なランタイムを作成しています. 現在では, Web ブラウザだけでなく, サーバー上でも, 組み込み環境でも同様にセキュアなランタイムが提供されています.</p>
+<h4 id="wasi">WASI</h4>
+<p>WASI (<strong>W</strong>eb<strong>A</strong>ssembly <strong>S</strong>ystem <strong>I</strong>nterface) は, WebAssembly のライタイム仕様で, WebAssembly が OS の機能を呼び出すための仕組み, すなわち, WebAssembly 版システムコールのようなものです. 具体的には, WebAssembly から I/O 処理したり, ファイルシステムを使ったりすることが可能になります.</p>
+<h2 id="webassembly-text-format-wat">WebAssembly Text format (WAT)</h2>
+<p><strong>WAT</strong> (<strong>W</strong>eb<strong>A</strong>ssembly <strong>T</strong>ext format) は WebAssembly (仮想マシン) におけるアセンブリ言語に相当します.
+実プロダクトの生産性を考慮すると, WAT で実装する機会はほとんどないかもしれませんが, 極限までネイティブコードに近いパフォーマンスを発揮したい場合に, WebAssembly がローレベルでなにをしているのかを知っているとパフォーマンスチューニングの生産性を向上できるかもしれません.</p>
+<p>さらに, WAT は他のアセンブリ言語と比較すると命令セットは少なく, <strong>数値演算の命令セットが基本です</strong> (加減乗除, 剰余, シフト演算, 比較演算, 論理演算 &hellip; etc). そして, サポートしているデータ型も, i32, i64, f32, f64 (32 bit と 64 bit の整数と浮動小数点数) の 4 種類のみです.
+もちろん, 将来のバージョンアップによって, 命令セットやデータ型も増える可能性はありますが, 差分の習得だけですみます
+(ちなみに, 数値演算以外の命令セットでよく使う命令セットは, 線形メモリから読み込む <code>load</code>, 線形メモリに書き込む <code>store</code> 命令があります).</p>
+<h2 id="webassembly-の開発環境">WebAssembly の開発環境</h2>
+<p>WebAssembly の開発環境 (ツール) はいくつかありますが, このブログでは, WAT を実行ファイル (wasm) にコンパイルするのみなので, <a href="https://github.com/battlelinegames/wat-wasm">wat-wasm</a> をインストールします (WAT がコンパイル可能であればなんでもよいでしょう).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ npm install -g wat-wasm
+</span></span></code></pre></div><h2 id="web-audio-api-と-webassembly">Web Audio API と WebAssembly</h2>
+<p>Web Audio API の API 設計は, Web Audio API が定義する <code>AudioNode</code> を接続して高度なオーディオ処理を実装することですが, その設計にしたがうだけでは, 実装できないオーディオ処理も存在します.</p>
+<ul>
+<li>ノイズ</li>
+<li>ボーカルキャンセラ</li>
+<li>ノイズゲート / ノイズサプレッサ</li>
+<li>チャンネルのごとの FFT / IFFT</li>
+<li>ピッチシフター</li>
+<li>タイムストレッチ</li>
+</ul>
+<p>例として, 上記にあげたオーディオ処理は, 直接音データにアクセスして, オーディオ処理を実装する必要があります (そのための <code>AudioNode</code> が <strong><code>ScriptProcessorNode</code></strong> (非推奨), <strong><code>AudioWorklet</code></strong> です).</p>
+<p>そのオーディオ処理を JavaScript で実装してもよいのですが, より高速化をはかるのであれば, WebAssembly を利用することで解決できるかもしれません.</p>
+<h2 id="実装">実装</h2>
+<p>ボーカルキャンセラとノイズゲートを WebAssembly で実装してみます.</p>
+<h3 id="ボーカルキャンセラ">ボーカルキャンセラ</h3>
+<p>ボーカルキャンセラのオーディオ処理は単純な数値演算で, 左右のチャンネルの入力の差を出力のサウンドデータにすることで, ボーカルパートを除去することができます (<code>depth</code> のパラメータを追加することで, 除去の度合いを調整することもできます).</p>
+<p>WAT には, 2 種類の記述スタイルがあり, 1 つがスタックマシンをそのまま記述する<strong>線形命令リスト</strong>スタイル, そして, もう 1 つが, やや高級言語ライクに, 命令セット (オペレータ) と対象のデータ (オペランド) を木構造のように記述する <strong>S式</strong> (<strong>S-expression</strong>) スタイルです.</p>
+<p>高級言語に慣れた方には, S 式の方が馴染みやすいかもしれませんが, S 式で記述するにしても, スタックマシン (線形命令リスト) を考慮して実装する必要があるので, 徐々に線形命令リストに慣れていくことをおすすめします.</p>
+<p>データ型, 命令セット, 簡易的な制御構文, そして, 線形メモリの操作などは, それなりのボリュームになるので, リファレンスなどを参照していただければと思います.</p>
+<h4 id="線形命令リスト">線形命令リスト</h4>
+<p>線形命令リストで実装した, ボーカルキャンセラのオーディオ処理です.
+スタックで実装可能な, 逆ポーランド記法 (後置記法) に慣れていると, 理解しやすいかもしれません.</p>
+<pre tabindex="0"><code>(module
+  (func (export &#34;vocalcanceler&#34;) (param $left f32) (param $right f32) (param $depth f32) (result f32)
+    local.get $left
+    local.get $right
+    local.get $depth
+    f32.mul
+    f32.sub
+  )
+)
+</code></pre><h4 id="s-式-s-expression">S 式 (S-expression)</h4>
+<p>S 式で実装した, ボーカルキャンセラのオーディオ処理です.
+線形命令リストと比較すると, やや高級言語に近い記述になります.</p>
+<pre tabindex="0"><code>(module
+  (func (export &#34;vocalcanceler&#34;) (param $left f32) (param $right f32) (param $depth f32) (result f32)
+    (f32.sub (local.get $left) (f32.mul (local.get $depth) (local.get $right)))
+  )
+)
+</code></pre><h4 id="コンパイル">コンパイル</h4>
+<p><code>wat-wasm</code> をインストールすると, WAT から WebAssembly のバイナリ (実行ファイル) にコンパイルする <code>wat2wasm</code> コマンドが使えるようになっているので, このコマンドで WAT を wasm にコンパイルします.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ wat2wasm vocalcanceler.wat
+</span></span></code></pre></div><h4 id="wasm-の読み込み">wasm の読み込み</h4>
+<p>Node.js であれば, ファイルシステムにアクセスできるので, wasm を読み込み, 実行ファイルのインタンスを生成して, WebAssembly の関数を呼び出すことができます.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span>    <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bytes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#e6db74">`{__dirname}/vocalcanceler.wasm`</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">WebAssembly</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">instantiate</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Uint8Array</span>(<span style="color:#a6e22e">bytes</span>))
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">instance</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span></code></pre></div><p>Web ブラウザではファイルシステムにアクセすることはできないので, ネットワーク上にアップロードした wasm を <code>fetch</code> を利用して, 実行ファイルを読み込んでその戻り値である, <code>Promise&lt;ArrayBuffer&gt;</code> を <code>instantiateStreaming</code> に渡します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#a6e22e">WebAssembly</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">instantiateStreaming</span>(<span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;./vocalcanceler.wasm&#39;</span>))
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">instance</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span></code></pre></div><h4 id="webassembly-の関数呼び出し">WebAssembly の関数呼び出し</h4>
+<p>Web Audio API の <code>ScriptProcessorNode</code> を利用して, その関数を呼び出し, ボーカルキャンセラのためのオーディオ処理を実装します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#a6e22e">WebAssembly</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">instantiateStreaming</span>(<span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;./vocalcanceler.wasm&#39;</span>))
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">instance</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// `processor` は, `ScriptProcessorNode` のインスタンス
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">onaudioprocess</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">event</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">inputLs</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">inputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">inputRs</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">inputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">outputLs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">outputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">outputRs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">outputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">bufferSize</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">outputLs</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">instance</span>.<span style="color:#a6e22e">exports</span>.<span style="color:#a6e22e">vocalcanceler</span>(<span style="color:#a6e22e">inputLs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">inputRs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">depth</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">outputRs</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">instance</span>.<span style="color:#a6e22e">exports</span>.<span style="color:#a6e22e">vocalcanceler</span>(<span style="color:#a6e22e">inputRs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">inputLs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">depth</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span></code></pre></div><h3 id="ノイズゲート">ノイズゲート</h3>
+<p>ノイズゲートのオーディオ処理も単純な数値演算で, 制御構文が必要なになるので, 少し複雑になります.</p>
+<h4 id="線形命令リスト-1">線形命令リスト</h4>
+<p>線形命令リストで実装した, ノイズゲートのオーディオ処理です.</p>
+<pre tabindex="0"><code>(module
+  (func (export &#34;noisegate&#34;) (param $input f32) (param $level f32) (result f32)
+    (local $output f32)
+
+    local.get $input
+    local.get $level
+    f32.gt
+
+    local.get $input
+    f32.const 0
+    local.get $level
+    f32.sub
+    f32.lt
+
+    i32.or
+
+    if
+      local.get $input
+      local.set $output
+    else
+      f32.const 0
+      local.set $output
+    end
+
+    local.get $output
+  )
+)
+</code></pre><p>少し余談ですが, 負数をとる場合, <code>-1</code> を乗算するよりも, <code>0</code> から対象の値を減算する方が高速です.</p>
+<h4 id="s-式-s-expression-1">S 式 (S-expression)</h4>
+<p>S 式で実装した, ノイズゲートのオーディオ処理です.</p>
+<pre tabindex="0"><code>(module
+  (func (export &#34;noisegate&#34;) (param $input f32) (param $level f32) (result f32)
+    (local $output f32)
+
+    (if
+      (i32.or
+        (f32.gt (local.get $input) (local.get $level))
+        (f32.lt (local.get $input) (f32.mul (f32.const -1) (local.get $level)))
+      )
+      (then
+        (local.set $output (local.get $input))
+      )
+      (else
+        (local.set $output (f32.const 0))
+      )
+    )
+
+    local.get $output
+  )
+)
+</code></pre><h4 id="コンパイル-1">コンパイル</h4>
+<p><code>wat-wasm</code> をインストールすると, WAT から WebAssembly のバイナリ (実行ファイル) にコンパイルする <code>wat2wasm</code> コマンドが使えるようになっているので, このコマンドで WAT を wasm にコンパイルします.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ wat2wasm noisegate.wat
+</span></span></code></pre></div><h4 id="wasm-の読み込み-1">wasm の読み込み</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#a6e22e">WebAssembly</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">instantiateStreaming</span>(<span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;./noisegate.wasm&#39;</span>))
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">instance</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span></code></pre></div><h4 id="webassembly-の関数呼び出し-1">WebAssembly の関数呼び出し</h4>
+<p>Web Audio API の <code>ScriptProcessorNode</code> を利用して, その関数を呼び出し, ノイズゲートのためのオーディオ処理を実装します.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#a6e22e">WebAssembly</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">instantiateStreaming</span>(<span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;./noisegate.wasm&#39;</span>))
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(({ <span style="color:#a6e22e">instance</span> }) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// `processor` は, `ScriptProcessorNode` のインスタンス
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">processor</span>.<span style="color:#a6e22e">onaudioprocess</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">event</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">inputLs</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">inputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">inputRs</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">inputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">outputLs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">outputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">outputRs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">outputBuffer</span>.<span style="color:#a6e22e">getChannelData</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">bufferSize</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">outputLs</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">instance</span>.<span style="color:#a6e22e">exports</span>.<span style="color:#a6e22e">noisegate</span>(<span style="color:#a6e22e">inputLs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">level</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">outputRs</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">instance</span>.<span style="color:#a6e22e">exports</span>.<span style="color:#a6e22e">noisegate</span>(<span style="color:#a6e22e">inputRs</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">level</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span></code></pre></div><h2 id="リファレンス">リファレンス</h2>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E5%85%A5%E9%96%80WebAssembly-Rick-Battagline/dp/4798173592">入門WebAssembly</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format">Understanding WebAssembly text format</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/" data-id="b3e1979e19219697234a6c57319ad40b" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://rilakkuma3xjapan.website/posts/audio-signal-processing-by-web-assembly/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+
+    
+<nav id="article-nav">
+    
+    <a href="https://rilakkuma3xjapan.website/posts/unix-v6-simulator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Install UNIX V6 simulator</div>
+    </a>
+    
+
+    
+    <a href="https://rilakkuma3xjapan.website/posts/dotfiles/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Newer
+      </strong>
+      <div class="article-nav-title">Update dotfiles</div>
+    </a>
+    
+</nav>
+
+
+</article>
+
+
+<section id="comments">
+    <div id="disqus_thread">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "Korilakkuma" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+</section>
+
+
+    </section>
+
+   	
+    	<aside id="sidebar">
+    
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/audio">
+                    audio
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/development">
+                    development
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/operating-system">
+                    operating-system
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/categories/programming">
+                    programming
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/dotfiles">
+                    dotfiles
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/language-server-protocol">
+                    language-server-protocol
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/linux">
+                    linux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/macos">
+                    macos
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11">
+                    pdp-11
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/pdp-11/40">
+                    pdp-11/40
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/tmux">
+                    tmux
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/ubuntu">
+                    ubuntu
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix">
+                    unix
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/unix-v6">
+                    unix-v6
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/vim">
+                    vim
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/wat">
+                    wat
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/web-audio-api">
+                    web-audio-api
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly">
+                    webassembly
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/webassembly-text-format">
+                    webassembly-text-format
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://rilakkuma3xjapan.website/tags/zsh">
+                    zsh
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tag cloud
+    </h3>
+    <div class="widget tagcloud">
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/dotfiles" style="font-size: 12px;">dotfiles</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/language-server-protocol" style="font-size: 12px;">language-server-protocol</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/linux" style="font-size: 12px;">linux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/macos" style="font-size: 12px;">macos</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11" style="font-size: 12px;">pdp-11</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/pdp-11/40" style="font-size: 12px;">pdp-11/40</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/tmux" style="font-size: 12px;">tmux</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/ubuntu" style="font-size: 12px;">ubuntu</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix" style="font-size: 12px;">unix</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/unix-v6" style="font-size: 12px;">unix-v6</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/vim" style="font-size: 12px;">vim</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/wat" style="font-size: 12px;">wat</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/web-audio-api" style="font-size: 12px;">web-audio-api</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly" style="font-size: 12px;">webassembly</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/webassembly-text-format" style="font-size: 12px;">webassembly-text-format</a>
+        
+        
+        <a href="https://rilakkuma3xjapan.website/tags/zsh" style="font-size: 12px;">zsh</a>
+        
+    </div>
+</div>
+
+
+
+
+
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022
+      Copyright (c) <a href="https://rilakkuma3xjapan.website/about/">Korilakkuma</a>
+    </div>
+  </div>
+</footer>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-41390233-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://rilakkuma3xjapan.website/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+</body>
+</html>
