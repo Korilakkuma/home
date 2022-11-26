@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/monokai.css">
     <link rel="stylesheet" href="https://rilakkuma3xjapan.website/fancybox/jquery.fancybox.css">
     
+    <link rel="stylesheet" href="https://rilakkuma3xjapan.website/css/main.css">
+    
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
     <meta property="og:title" content="Boot Linux on MacBook Air 2020" />
@@ -34,7 +36,7 @@
     <meta itemprop="name" content="Boot Linux on MacBook Air 2020">
 <meta itemprop="description" content="MacBook Air 2020 で Ubuntu をデュアルブートする"><meta itemprop="datePublished" content="2022-04-09T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-04-09T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2785">
+<meta itemprop="wordCount" content="2782">
 <meta itemprop="keywords" content="Linux,Ubuntu,macOS," />
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Boot Linux on MacBook Air 2020"/>
@@ -236,7 +238,7 @@
 
 
 
-          <td><a href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/index.xml%20https://rilakkuma3xjapan.website/index.xml%7d" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+          <td><a href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/about/index.xml%20https://rilakkuma3xjapan.website/about/index.xml%7d" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
         </tr>
       </table>
     </div>
@@ -263,7 +265,7 @@
             <i class="fa fa-calendar"></i>
             <time datetime="2022-04-09 00:00:00 &#43;0000 UTC" itemprop="datePublished">2022-04-09</time>
             &middot;
-            2785
+            2782
             words
             &middot;
             6
@@ -332,15 +334,9 @@
 <p><img src="https://user-images.githubusercontent.com/4006693/162565377-800dc8d0-e684-4f30-8149-b2b6282eb1f6.gif" alt="USB メモリ フォーマット"></p>
 <p>あとは, balenaEtcher のナビゲーションにしたがって, ディスクイメージを選択して, 書き込み先の USB メモリを指定して, 書き込むだけです.</p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162566236-6fc3b43b-6a08-48a0-99a3-b1a9ae801577.gif" alt="インストーラの書き込み"></p>
-<h1 id="create-partition-for-linux">Create Partition for Linux</h1>
-<p>Linux をインストールするためのパーティションを作成します.
-Disk Utility を使って, <strong>パーティション</strong>を作成します (<strong>ボリュームではないので注意してください</strong>).
-割り当てたいディスクサイズを選択して, <strong>FAT</strong> でフォーマットします.
-Name は任意です (ただ, あとから判別しやすいようなパーティション名にしておくほうがよいでしょう).</p>
-<p><img src="https://user-images.githubusercontent.com/4006693/162567106-2da33cae-205c-4dad-a1f6-f6f7c21a867c.gif" alt="パーティションの作成"></p>
-<p>もし, 割り当てサイズを変更したい場合などは, 以下のように 1 度パーティションを削除して, 再度割り当て直します.</p>
-<p><img src="https://user-images.githubusercontent.com/4006693/162566700-bd088037-1833-4a01-baa5-bb083589279a.gif" alt="パーティションの削除"></p>
 <h1 id="enable-to-boot-from-usb">Enable to boot from USB</h1>
+<h2 id="sip-system-integrity-protection">SIP (System Integrity Protection</h2>
+<p>wip</p>
 <p>macOS のデフォルトの設定だと, USB メモリから Ubuntu を起動することはできないので, macOS Recovery を起動して設定を変更します.
 まず, 電源を ON にしたときに (再起動時に), <strong>command + R</strong> を押し続けると, macOS Recovery が起動します.</p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162568106-e0d58420-584b-40eb-93c0-81eb1cf3ea9c.gif" alt="macOS Recovery の起動"></p>
@@ -359,6 +355,14 @@ Name は任意です (ただ, あとから判別しやすいようなパーテ�
 <p><img src="https://user-images.githubusercontent.com/4006693/162568621-11134909-5c83-4eb6-9d6b-7d832a90b46e.png" alt="Terminal"></p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162568597-03a4005b-cbc1-4664-ba81-61727bdca697.png" alt="SIP の無効化"></p>
 <p>これで, ようやく, USB メモリに書き込んだインストーラを起動する準備ができました !</p>
+<h1 id="create-partition-for-linux">Create Partition for Linux</h1>
+<p>Linux をインストールするためのパーティションを作成します.
+Disk Utility を使って, <strong>パーティション</strong>を作成します (<strong>ボリュームではないので注意してください</strong>).
+割り当てたいディスクサイズを選択して, <strong>FAT</strong> でフォーマットします.
+Name は任意です (ただ, あとから判別しやすいようなパーティション名にしておくほうがよいでしょう).</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162567106-2da33cae-205c-4dad-a1f6-f6f7c21a867c.gif" alt="パーティションの作成"></p>
+<p>もし, 割り当てサイズを変更したい場合などは, 以下のように 1 度パーティションを削除して, 再度割り当て直します.</p>
+<p><img src="https://user-images.githubusercontent.com/4006693/162566700-bd088037-1833-4a01-baa5-bb083589279a.gif" alt="パーティションの削除"></p>
 <h1 id="install-linux">Install Linux</h1>
 <p>電源を ON にする前に, インストーラを書き込んだ USB メモリと, 外付けキーボードを接続しておきます.
 起動時に, <strong>option</strong> キーを押し続けると, 起動するディスクを選択することができるので, 最も右側の USB メモリのようなアイコンの <strong>EFIBoot</strong> を選択すると, Ubuntu が起動します.</p>
@@ -396,7 +400,7 @@ Linux を起動するための, ブートローダーである GRUB をインス
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo -s
 </span></span><span style="display:flex;"><span>$ mount /dev/nvme0n1p3 /mnt <span style="color:#75715e"># Ubuntu をインストールしたパーティションをマウント</span>
 </span></span><span style="display:flex;"><span>$ mount /dev/nvme0n1p1 /mnt/boot/efi  <span style="color:#75715e"># EFI (Extensible Firmware Interface) のパーティションをマウント</span>
-</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">for</span> i in /dev /dev/pts /proc /sys /run; <span style="color:#66d9ef">do</span> sudo mount -B $i /mnt$i; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">for</span> i in /dev /dev/pts /proc /sys /run; <span style="color:#66d9ef">do</span> sudo mount -B $i /mnt<span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>; <span style="color:#66d9ef">done</span>
 </span></span><span style="display:flex;"><span>$ sudo chroot /mnt
 </span></span><span style="display:flex;"><span>$ grub-install --force /dev/nvme0n1
 </span></span><span style="display:flex;"><span>$ update-grub
@@ -419,9 +423,9 @@ Linux を起動するための, ブートローダーである GRUB をインス
 </span></span></code></pre></div><p><img src="https://user-images.githubusercontent.com/4006693/162574093-f84fe44d-5599-45aa-8c74-f9e981f5f064.gif" alt="GRUB ターミナル"></p>
 <p><img src="https://user-images.githubusercontent.com/4006693/176887035-a4c8afe5-6ac0-4b8b-8ec6-63b093e3ebce.png" alt="GRUB ls"></p>
 <p><img src="https://user-images.githubusercontent.com/4006693/176887060-494fe0f1-6b34-4c52-9fe0-a6185c654a55.png" alt="GRUB configfile (hdX,gptY)/boot/grub/grub.cfg"></p>
-<p>Ubuntu がディスクから起動できたら, 再度, macOS Recovery を起動して, SIP の設定をもとに戻しておきます.</p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162573998-e93ce08f-109c-4a8d-8c06-c5728404c688.gif" alt="Ubuntu を MacBook Air でブート"></p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162574153-9c42a9d0-5bab-4f9d-8d4d-d89cfc261e34.png" alt="Ubuntu デスクトップ画面"></p>
+<p>Ubuntu がディスクから起動できたら, 再度, macOS Recovery を起動して, SIP の設定をもとに戻しておきます.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ csrutil enable
 </span></span></code></pre></div><p>また, Macintosh HD を選択すれば, macOS が起動できることも確認しておきましょう.</p>
 <p><img src="https://user-images.githubusercontent.com/4006693/162607249-f0a2a610-bb24-4942-bf15-f38209f2d59a.gif" alt="macOS を起動"></p>
@@ -450,8 +454,6 @@ AUTOINSTALL=&#34;yes&#34;
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo dkms install -m apple-bce -v 0.2
 </span></span></code></pre></div><p>Linux カーネルにモジュールをロードします.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo modprobe apple_bce
-</span></span><span style="display:flex;"><span>$ sudo modprobe apple_ib_tb
-</span></span><span style="display:flex;"><span>$ sudo modprobe apple_ib_als
 </span></span></code></pre></div><p>以上で, キーボード, トラックパッド, オーディオデバイスが動作します.</p>
 <p>あとは, 起動時にモジュールをロードするように設定を追記します.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo -s
