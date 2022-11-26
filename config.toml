@@ -41,7 +41,7 @@ hasCJKLanguage = true
     date_format = "2006-01-02"
 
     # Add custom assets with their paths relative to the static folder
-	custom_css = []
+	custom_css = ['css/main.css']
 	custom_js  = []
 
     icarus_disable_profile = false
